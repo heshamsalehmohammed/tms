@@ -1,0 +1,29 @@
+.error-popup {
+    width: 550px;
+    max-width: 100%;
+    .modal-content {
+        .modal-header {
+            border-bottom-width: 2px;
+        }
+        .modal-title {
+            img {
+                float: left;
+                margin: 0 10px 0 0;
+            }
+        }
+    }
+}
+.invalid-main-component {
+    padding: 10px 20px 0;
+}
+.invalid-main-component-text {
+    font-weight: bold;
+}
+
+.popup-error {
+    padding: 10px 20px 0;
+
+    ul {
+        padding: 10px 0 0 15px;
+    }
+}
