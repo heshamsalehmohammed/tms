@@ -81,7 +81,7 @@ const PopupMessage = ({
                     ))}
                 </div>
             )}
-            <div className='dialog-content' style={{ minHeight: '90px' }}>
+            <div className='dialog-content'>
                 {multiMessages ? (
                     message.map((m) => (
                         <h6
@@ -109,7 +109,7 @@ const PopupMessage = ({
             </div>
             <div className='dialog-footer'>
                 <button
-                    className='btn btn-primary float-right'
+                    className='btn btn-primary float-right tms-dark-btn'
                     style={{
                         marginTop: '16px'
                         // className: {type === 'Error'}? ' ' : ''
