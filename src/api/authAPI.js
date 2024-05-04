@@ -1,7 +1,7 @@
 import http from '../services/apiServices';
 import generalConfig from '../GeneralConfig.json';
 
-const users = [
+/* const users = [
   {id: 1, username: 'user1', password: 'password1'},
   {id: 2, username: 'user2', password: 'password2'},
 ];
@@ -44,21 +44,21 @@ export const registerAPI = async ({username, password}) => {
 
   // Return only necessary data for authentication
   return {id: newUser.id, username: newUser.username};
-};
+}; */
 
 
 
 
-export const loginAPI1 = async (userDetails) => {
+export const loginAPI = async (userDetails) => {
     const result = await http.post(
-        `${generalConfig.API_ENDPOINT_PREFIX}/user/Login`,
+        `${generalConfig.API_ENDPOINT_PREFIX}User/Login`,
         userDetails
     );
     return result;
 };
 
 
-export const registerAPI1 = async (userDetails) => {
+export const registerAPI = async (userDetails) => {
     const result = await http.post(
         `${generalConfig.API_ENDPOINT_PREFIX}/user/Register`,
         userDetails

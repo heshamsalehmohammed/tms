@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import Login from './Login';
+import Login from './Login/Login';
 
 const Home = () => {
   return (
