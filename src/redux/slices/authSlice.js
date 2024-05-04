@@ -1,6 +1,59 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {loginAPI, registerAPI} from '../../api/authAPI'; // Import your authentication API functions
-import { startLoading, stopLoading } from './utilitiesSlice';
+import {startLoading, stopLoading} from './utilitiesSlice';
+import {handleHttpRequestPromise} from '../../services/HTTPRequestHandler';
+
+
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (payload, thunkAPI) => {
+    return handleHttpRequestPromise(loginAPI(payload), {
+      type: 'openPopup',
+      payload: {
+        type: 'Error',
+        title: 'Error login user',
+        message:
+          'An unexpected error occurred, Cannot login user at thee moment. ',
+        buttonLabel: 'OK',
+      },
+    })
+      .then((result) => {
+        if (!result.user) {
+          return thunkAPI.rejectWithValue(result);
+        }
+
+        return thunkAPI.fulfillWithValue(result);
+      }).catch((error)=>{
+        //return thunkAPI.rejectWithValue({error:error.message});
+      })
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (userData, thunkAPI) => {
+    return handleHttpRequestPromise(registerAPI(userData), {
+      type: 'openPopup',
+      payload: {
+        type: 'Error',
+        title: 'Error registering user',
+        message:
+          'An unexpected error occurred, Cannot register user at the moment. ',
+        buttonLabel: 'OK',
+      },
+    })
+      .then((result) => {
+        if (!result.user) {
+          return thunkAPI.rejectWithValue(result);
+        }
+
+        return thunkAPI.fulfillWithValue(result);
+      }).catch((error)=>{
+        return thunkAPI.rejectWithValue({error:error.message});
+      })
+  }
+);
+
 
 const initialState = {
   isAuthenticated: false,
@@ -12,44 +65,37 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginStart(state) {
-      state.error = null;
-    },
-    loginSuccess(state, action) {
-      state.isAuthenticated = true;
-      state.user = action.payload;
-    },
-    loginFailure(state, action) {
-      state.error = action.payload;
-    },
-    registerStart(state) {
-      state.error = null;
-    },
-    registerSuccess(state, action) {
-      state.isAuthenticated = true;
-      state.user = action.payload;
-    },
-    registerFailure(state, action) {
-      state.error = action.payload;
-    },
     logout(state) {
       state.isAuthenticated = false;
       state.user = null;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.error = action.payload.error;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.error = action.payload.error;
+      });
+  },
 });
 
 export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  registerStart,
-  registerSuccess,
-  registerFailure,
   logout,
 } = authSlice.actions;
 
-export const login = (credentials) => async (dispatch) => {
+
+
+/* export const login = (credentials) => async (dispatch) => {
   try {
     dispatch(startLoading());
     dispatch(loginStart());
@@ -57,9 +103,8 @@ export const login = (credentials) => async (dispatch) => {
     dispatch(loginSuccess(user));
   } catch (error) {
     dispatch(loginFailure(error.message));
-  } finally{
+  } finally {
     dispatch(stopLoading());
-
   }
 };
 
@@ -71,10 +116,9 @@ export const register = (userData) => async (dispatch) => {
     dispatch(registerSuccess(user));
   } catch (error) {
     dispatch(registerFailure(error.message));
-  } finally{
+  } finally {
     dispatch(stopLoading());
-
   }
-};
+}; */
 
 export default authSlice;

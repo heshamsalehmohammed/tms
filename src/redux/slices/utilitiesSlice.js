@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Define initial state
 const initialState = {
-    loading: 1,
+    loading: 0,
     popup: {
         isDisplayed: false,
         type: '',

@@ -13,33 +13,21 @@ export default function showMessage(messageConfig) {
         default:
             dispatch(
                 openPopup(
-                    messageConfig.payload.type,
-                    messageConfig.payload.title,
-                    messageConfig.payload.message,
-                    messageConfig.payload.multiMessages ?? false,
-                    messageConfig.payload.headers ?? [],
-                    messageConfig.payload.buttonLabel
+                    messageConfig.payload
                 )
             );
             break;
         case 'openConfirmationPopup':
             dispatch(
                 openConfirmationPopup(
-                    messageConfig.payload.actionName,
-                    messageConfig.payload.actionMessage,
-                    messageConfig.payload.confirmCallback,
-                    messageConfig.payload.declineCallback,
-                    messageConfig.payload.confirmationButtonText,
-                    messageConfig.payload.cancelText,
-                    messageConfig.payload.closable
+                    messageConfig.payload
                 )
             );
             break;
         case 'errorPopup':
             dispatch(
                 openErrorPopup(
-                    messageConfig.payload.title,
-                    messageConfig.payload.body
+                    messageConfig.payload
                 )
             );
             break;

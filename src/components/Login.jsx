@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/slices/authSlice';
+import { login, loginUser } from '../redux/slices/authSlice';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -9,7 +9,7 @@ const Login = () => {
   const { loading, error } = useSelector((state) => state.auth);
 
   const handleLogin = () => {
-    dispatch(login({ username, password }));
+    dispatch(loginUser({ username, password }));
   };
 
   return (

@@ -42,22 +42,7 @@ export async function handleHTTPRequest(
             handleSuccess(result);
         })
         .catch((error) => {
-            if (
-                errorMessageConfig &&
-                errorMessageConfig.backendErrorMessage?.show &&
-                error.response.status === 400
-            ) {
-                showMessage({
-                    ...errorMessageConfig,
-                    payload: {
-                        ...errorMessageConfig.payload,
-                        message:
-                            errorMessageConfig.backendErrorMessage?.errorMessageFormatter(
-                                error.response.data
-                            )
-                    }
-                });
-            } else if (errorMessageConfig) showMessage(errorMessageConfig);
+            if (errorMessageConfig) showMessage(errorMessageConfig);
             handleException(error);
         })
         .finally(() => {
