@@ -15,7 +15,7 @@ const SysNavBar = () => {
         bg="dark"
         data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">TMS</Navbar.Brand>
+          <Navbar.Brand href="/" style={{marginLeft:'20px'}}>TMS</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
