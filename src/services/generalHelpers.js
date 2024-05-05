@@ -4,10 +4,10 @@ import _ from 'lodash';
  * @returns {boolean}
  */
 const isNullOrWhiteSpace = (str) => {
-    if (str !== null && str !== undefined && typeof str !== 'string') {
-        str = str.toString();
-    }
-    return !str || str.trim() === '';
+  if (str !== null && str !== undefined && typeof str !== 'string') {
+    str = str.toString();
+  }
+  return !str || str.trim() === '';
 };
 
 /**
@@ -15,7 +15,7 @@ const isNullOrWhiteSpace = (str) => {
  * @returns {boolean}
  */
 const isNullOrEmpty = (list) => {
-    return !list || list.length === 0;
+  return !list || list.length === 0;
 };
 
 /**
@@ -23,12 +23,12 @@ const isNullOrEmpty = (list) => {
  * @returns {number}
  */
 const max = (list) => {
-    let maxValue = 0;
-    list.forEach((v) => {
-        if (v > maxValue) maxValue = v;
-    });
+  let maxValue = 0;
+  list.forEach((v) => {
+    if (v > maxValue) maxValue = v;
+  });
 
-    return maxValue;
+  return maxValue;
 };
 
 /**
@@ -37,11 +37,11 @@ const max = (list) => {
  */
 
 const allEqual = (arr) => {
-    if (arr.length > 0) {
-        return arr.every((v) => v === arr[0]);
-    } else {
-        return false;
-    }
+  if (arr.length > 0) {
+    return arr.every((v) => v === arr[0]);
+  } else {
+    return false;
+  }
 };
 
 /**
@@ -50,10 +50,10 @@ const allEqual = (arr) => {
  */
 
 const removePropertiesFromObject = (object, properties) => {
-    if (!properties || !object) return;
-    properties.forEach((p) => {
-        delete object[p];
-    });
+  if (!properties || !object) return;
+  properties.forEach((p) => {
+    delete object[p];
+  });
 };
 
 /**
@@ -62,8 +62,8 @@ const removePropertiesFromObject = (object, properties) => {
  */
 
 function isDecimal(str) {
-    var match = str.match(/(\d+\.?\d*|\.\d+)/g);
-    return match && str === match[0];
+  var match = str.match(/(\d+\.?\d*|\.\d+)/g);
+  return match && str === match[0];
 }
 
 /**
@@ -72,12 +72,12 @@ function isDecimal(str) {
  */
 
 function isInteger(str) {
-    if (str == undefined) return false;
-    if (typeof str !== 'string') {
-        str = str.toString();
-    }
-    var match = str.match(/(\d+)/g);
-    return match && str === match[0];
+  if (str == undefined) return false;
+  if (typeof str !== 'string') {
+    str = str.toString();
+  }
+  var match = str.match(/(\d+)/g);
+  return match && str === match[0];
 }
 
 /**
@@ -85,72 +85,80 @@ function isInteger(str) {
  * @returns {string}
  */
 const formatToTwoDigitsMax = (value) => {
-    let twoDigitValue = value.toFixed(2);
+  let twoDigitValue = value.toFixed(2);
 
-    twoDigitValue = twoDigitValue.replace(/[.,]00$/, '');
+  twoDigitValue = twoDigitValue.replace(/[.,]00$/, '');
 
-    if (twoDigitValue.includes('.')) {
-        twoDigitValue = twoDigitValue.replace(/0$/, '');
-    }
+  if (twoDigitValue.includes('.')) {
+    twoDigitValue = twoDigitValue.replace(/0$/, '');
+  }
 
-    return twoDigitValue;
+  return twoDigitValue;
 };
 
 const checkAllObjectParametersAreZero = (object) => {
-    return Object.values(object).every((v) =>
-        v && typeof v === 'object'
-            ? checkAllObjectParametersAreZero(v)
-            : v === 0 || v === null
-    );
+  return Object.values(object).every((v) =>
+    v && typeof v === 'object'
+      ? checkAllObjectParametersAreZero(v)
+      : v === 0 || v === null
+  );
 };
 
 const getIdFromLookupByCode = (lookupList, code) => {
-    return lookupList.find((item) => item?.Code === code)?.Id;
+  return lookupList.find((item) => item?.Code === code)?.Id;
 };
 
 const getIdFromLookupByName = (lookupList, name) => {
-    return lookupList.find((item) => item?.Name === name)?.Id;
+  return lookupList.find((item) => item?.Name === name)?.Id;
 };
 
 const isTwoArraysEqualBy = (arr1, arr2, func) => {
-    if (arr1.length !== arr2.length) return false;
-    return arr1.every((e1) => {
-        return arr2.some((e2) => {
-            return func(e1, e2);
-        });
+  if (arr1.length !== arr2.length) return false;
+  return arr1.every((e1) => {
+    return arr2.some((e2) => {
+      return func(e1, e2);
     });
+  });
 };
 
 const compareObjectsByPropertyStatus = (obj1, obj2, property) => {
-    const clonedObj1 = _.cloneDeep(obj1);
-    const clonedObj2 = _.cloneDeep(obj2);
+  const clonedObj1 = _.cloneDeep(obj1);
+  const clonedObj2 = _.cloneDeep(obj2);
 
-    const clonedObj1WithoutProperty = _.cloneDeep(obj1);
-    delete clonedObj1WithoutProperty[property];
-    const clonedObj2WithoutProperty = _.cloneDeep(obj2);
-    delete clonedObj2WithoutProperty[property];
+  const clonedObj1WithoutProperty = _.cloneDeep(obj1);
+  delete clonedObj1WithoutProperty[property];
+  const clonedObj2WithoutProperty = _.cloneDeep(obj2);
+  delete clonedObj2WithoutProperty[property];
 
-    return {
-        propertyChanged: !_.isEqual(clonedObj1[property], clonedObj2[property]),
-        anyOtherPropertiesChanged: !_.isEqual(
-            clonedObj1WithoutProperty,
-            clonedObj2WithoutProperty
-        )
-    };
+  return {
+    propertyChanged: !_.isEqual(clonedObj1[property], clonedObj2[property]),
+    anyOtherPropertiesChanged: !_.isEqual(
+      clonedObj1WithoutProperty,
+      clonedObj2WithoutProperty
+    ),
+  };
+};
+
+const handleKeyPress = (target, executeOn = [], callback) => {
+  if (executeOn.includes(target.charCode)) {
+    return callback;
+  }
+  return () => {};
 };
 
 export {
-    isNullOrWhiteSpace,
-    isNullOrEmpty,
-    max,
-    allEqual,
-    removePropertiesFromObject,
-    isDecimal,
-    isInteger,
-    formatToTwoDigitsMax,
-    checkAllObjectParametersAreZero,
-    getIdFromLookupByCode,
-    getIdFromLookupByName,
-    isTwoArraysEqualBy,
-    compareObjectsByPropertyStatus
+  isNullOrWhiteSpace,
+  isNullOrEmpty,
+  max,
+  allEqual,
+  removePropertiesFromObject,
+  isDecimal,
+  isInteger,
+  formatToTwoDigitsMax,
+  checkAllObjectParametersAreZero,
+  getIdFromLookupByCode,
+  getIdFromLookupByName,
+  isTwoArraysEqualBy,
+  compareObjectsByPropertyStatus,
+  handleKeyPress,
 };

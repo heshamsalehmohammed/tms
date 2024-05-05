@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {loginAPI, registerAPI} from '../../api/authAPI'; // Import your authentication API functions
-import {startLoading, stopLoading} from './utilitiesSlice';
+import {loginAPI, logoutAPI, registerAPI} from '../../api/authAPI';
 import {handleHttpRequestPromise} from '../../services/HTTPRequestHandler';
+
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -31,6 +31,29 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (payload, thunkAPI) => {
+    return handleHttpRequestPromise(logoutAPI(payload), {
+      type: 'openPopup',
+      showForStatuses: 'all',
+      payload: {
+        type: 'Error',
+        title: 'Error login user',
+        message:
+          'An unexpected error occurred, Cannot login user at thee moment. ',
+        buttonLabel: 'OK',
+      },
+    })
+      .then((result) => {
+        return thunkAPI.fulfillWithValue(result.data);
+      })
+      .catch((error) => {
+        return thunkAPI.abort();
+      });
+  }
+);
+
 export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData, thunkAPI) => {
@@ -54,7 +77,6 @@ export const registerUser = createAsyncThunk(
 );
 
 const initialState = {
-  isAuthenticated: false,
   user: null,
   error: null,
 };
@@ -66,15 +88,10 @@ const authSlice = createSlice({
     clearAuthError(state) {
       state.error = null;
     },
-    logout(state) {
-      state.isAuthenticated = false;
-      state.user = null;
-    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isAuthenticated = true;
         localStorage.setItem('token', action.payload.Data.Token);
         state.user = action.payload.Data.User;
       })
@@ -83,8 +100,14 @@ const authSlice = createSlice({
           state.error = action.payload.error;
         }
       })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        localStorage.removeItem('token');
+        state.user = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+
+      })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isAuthenticated = true;
         state.user = action.payload.user;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -93,6 +116,6 @@ const authSlice = createSlice({
   },
 });
 
-export const {logout, clearAuthError} = authSlice.actions;
+export const { clearAuthError} = authSlice.actions;
 
-export default authSlice;
+export default authSlice.reducer;

@@ -19,6 +19,7 @@ const MainLayout = (props) => {
 
   const errorPopup = useSelector((state) => state.utilities.errorPopup);
 
+
   return (
     <>
       {loading ? <Spinner /> : <></>}

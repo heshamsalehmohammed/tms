@@ -97,4 +97,4 @@ export const {
     closeConfirmationPopup
 } = utilitiesSlice.actions;
 
-export default utilitiesSlice;
+export default utilitiesSlice.reducer;

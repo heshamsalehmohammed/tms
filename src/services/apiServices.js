@@ -1,12 +1,26 @@
 import axios from 'axios';
 
-if (localStorage.getItem('token') !== null) {
-  axios.defaults.headers.common = {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  };
-}
+const axiosInstance = axios.create({
+  //baseURL: 'your_base_url_here', // Set your base URL
+  headers: {
+    'Content-Type': 'application/json',
+    // You can set other default headers here if needed
+  },
+});
 
-axios.interceptors.response.use(null, (error) => {
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Token = `${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+});
+
+axiosInstance.interceptors.response.use(null, (error) => {
   if (error.code == 'ERR_NETWORK') {
     error.response = {status: 404, statusText: 'Not Found'};
   }
@@ -15,10 +29,10 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 export default {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete,
-  patch: axios.patch,
-  isRequestCancelled: axios.isCancel,
+  get: axiosInstance.get,
+  post: axiosInstance.post,
+  put: axiosInstance.put,
+  delete: axiosInstance.delete,
+  patch: axiosInstance.patch,
+  isRequestCancelled: axiosInstance.isCancel,
 };

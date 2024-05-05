@@ -46,22 +46,25 @@ export const registerAPI = async ({username, password}) => {
   return {id: newUser.id, username: newUser.username};
 }; */
 
-
-
-
 export const loginAPI = async (userDetails) => {
-    const result = await http.post(
-        `${generalConfig.API_ENDPOINT_PREFIX}User/Login`,
-        userDetails
-    );
-    return result;
+  const result = await http.post(
+    `${generalConfig.API_ENDPOINT_PREFIX}User/Login`,
+    userDetails
+  );
+  return result;
 };
 
+export const logoutAPI = async (userDetails) => {
+  const result = await http.post(
+    `${generalConfig.API_ENDPOINT_PREFIX}User/Logout`
+  );
+  return result;
+};
 
 export const registerAPI = async (userDetails) => {
-    const result = await http.post(
-        `${generalConfig.API_ENDPOINT_PREFIX}/user/Register`,
-        userDetails
-    );
-    return result;
+  const result = await http.post(
+    `${generalConfig.API_ENDPOINT_PREFIX}/user/Register`,
+    userDetails
+  );
+  return result;
 };
