@@ -1,12 +1,49 @@
-import React, {useEffect, useState} from 'react';
-import SysNavBar from './SysNabBar/SysNavBar';
-import UserNavBar from './UserNavBar/UserNavBar';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import SysNavBar from "./SysNabBar/SysNavBar";
+import UserNavBar from "./UserNavBar/UserNavBar";
+import Timesheet from "../Timesheet/Timesheet";
+import Vacations from "../Vacations/Vacations";
+import "./Home.scss";
+
+const BodyContentWrapper = ({ children }) => {
+  return (
+    <div className="body-content container p-3 mt-3 m-auto">{children}</div>
+  );
+};
 
 const Home = () => {
   return (
     <div>
-      <UserNavBar/>
+      <UserNavBar />
       <SysNavBar />
+
+      <Routes>
+        <Route
+          path="/vacations"
+          element={
+            <BodyContentWrapper>
+              <Vacations />
+            </BodyContentWrapper>
+          }
+        />
+        <Route
+          path="/vacations/*"
+          element={
+            <BodyContentWrapper>
+              <Vacations />
+            </BodyContentWrapper>
+          }
+        />
+        <Route
+          path="/timesheet"
+          element={
+            <BodyContentWrapper>
+              <Timesheet />
+            </BodyContentWrapper>
+          }
+        />
+      </Routes>
     </div>
   );
 };

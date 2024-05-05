@@ -1,0 +1,12 @@
+.vacations-container {
+  .nav-link {
+    color: #151f31;
+    &:hover {
+      color: #3a84d7;
+    }
+  }
+  .nav-pills .nav-link.active,
+  .nav-pills .show > .nav-link {
+    background-color: #233a53;
+  }
+}

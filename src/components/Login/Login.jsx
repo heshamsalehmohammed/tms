@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = () => {
     dispatch(loginUser({username, password})).then(() => {
-      navigate('/');
+      navigate('/home');
     });
   };
 

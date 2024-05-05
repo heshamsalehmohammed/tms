@@ -1,26 +1,35 @@
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import './SysNavBar.scss'
+import React from "react";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import "./SysNavBar.scss";
+import { Link } from "react-router-dom";
 
 const SysNavBar = () => {
   return (
-    <div className='sys-nav-container'>
+    <div className="sys-nav-container">
       <Navbar
         collapseOnSelect
         expand="lg"
         className="bg-body-tertiary"
         bg="dark"
-        data-bs-theme="dark">
+        data-bs-theme="dark"
+      >
         <Container>
-          <Navbar.Brand href="/" style={{marginLeft:'20px'}}>TMS</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/home" style={{ marginLeft: "20px" }}>
+            TMS
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#features">Time Sheet</Nav.Link>
-              <Nav.Link href="#pricing">Vacations</Nav.Link>
+              <Link to="/home/vacations" className="nav-link">
+                Vacations
+              </Link>
+              <Link to="/home/timesheet" className="nav-link">
+                Time Sheet
+              </Link>
+
               {/* <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -35,7 +44,7 @@ const SysNavBar = () => {
                 </NavDropdown.Item>
               </NavDropdown> */}
             </Nav>
-{/*             <Nav>
+            {/*             <Nav>
               <Nav.Link href="#deets">More deets</Nav.Link>
               <Nav.Link eventKey={2} href="#memes">
                 Dank memes
